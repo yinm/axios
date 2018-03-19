@@ -1,4 +1,10 @@
-var people = [
+const people = [
+  {
+    "name": "a",
+    "github": "b",
+    "twitter": "c",
+    "avatar": "1"
+  },
   {
     "name": "Matt Zabriskie",
     "github": "mzabriskie",
@@ -23,12 +29,12 @@ var people = [
     "twitter": "chrisesplin",
     "avatar": "878947"
   }
-];
+]
 
-module.exports = function (req, res) {
+module.exports = (req, res) => {
   res.writeHead(200, {
     'Content-Type': 'text/json'
-  });
-  res.write(JSON.stringify(people));
-  res.end();
-};
+  })
+  res.write(JSON.stringify(people))
+  res.end()
+}

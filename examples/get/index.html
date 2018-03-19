@@ -11,8 +11,8 @@
     <script src="/axios.min.js"></script>
     <script>
       axios.get('/get/server')
-        .then(function (response) {
-          document.getElementById('people').innerHTML = response.data.map(function (person) {
+        .then((response) => {
+          document.getElementById('people').innerHTML = response.data.map((person) => {
             return (
               '<li class="row">' +
                 '<img src="https://avatars.githubusercontent.com/u/' + person.avatar + '?s=50" class="col-md-1"/>' +
@@ -22,12 +22,12 @@
                   '<div>Twitter: <a href="https://twitter.com/' + person.twitter + '" target="_blank">' + person.twitter + '</a></div>' +
                 '</div>' +
               '</li><br/>'
-            );
-          }).join('');
+            )
+          }).join('')
         })
-        .catch(function (err) {
-          document.getElementById('people').innerHTML = '<li class="text-danger">' + err.message + '</li>';
-        });
+        .catch((err) => {
+          document.getElementById('people').innerHTML = '<li class="text-danger">' + err.message + '</li>'
+        })
     </script>
   </body>
 </html>
