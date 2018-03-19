@@ -1,4 +1,3 @@
-/* axios v0.18.0 | (c) 2018 by Matt Zabriskie */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
@@ -506,7 +505,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, arguments[1]);
 	  }
 	
-	  config = utils.merge(defaults, {method: 'get'}, this.defaults, config);
+	  config = utils.merge(defaults, this.defaults, config);
 	  config.method = config.method.toLowerCase();
 	
 	  // Hook up interceptors middleware
@@ -585,6 +584,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 	
 	var defaults = {
+	  method: 'get',
 	  adapter: getDefaultAdapter(),
 	
 	  transformRequest: [function transformRequest(data, headers) {
@@ -703,7 +703,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    // For IE 8/9 CORS support
 	    // Only supports POST and GET calls and doesn't returns the response headers.
 	    // DON'T do this for testing b/c XMLHttpRequest is mocked, not XDomainRequest.
-	    if (("production") !== 'test' &&
+	    if ((undefined) !== 'test' &&
 	        typeof window !== 'undefined' &&
 	        window.XDomainRequest && !('withCredentials' in request) &&
 	        !isURLSameOrigin(config.url)) {
@@ -754,6 +754,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	      };
 	
 	      settle(resolve, reject, response);
+	
+	      // Clean up request
+	      request = null;
+	    };
+	
+	    // Handle browser request cancellation (as opposed to a manual cancellation)
+	    request.onabort = function handleAbort() {
+	      if (!request) {
+	        return;
+	      }
+	
+	      reject(createError('Request aborted', config, 'ECONNABORTED', request));
 	
 	      // Clean up request
 	      request = null;
