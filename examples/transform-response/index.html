@@ -18,27 +18,27 @@
  
     <script src="/axios.min.js"></script>
     <script>
-      var ISO_8601 = /(\d{4}-\d{2}-\d{2})T(\d{2}:\d{2}:\d{2})Z/;
+      const ISO_8601 = /(\d{4}-\d{2}-\d{2})T(\d{2}:\d{2}:\d{2})Z/
       function formatDate(d) {
-        return (d.getMonth() + 1) + '/' + d.getDate() + '/' + d.getFullYear();
+        return (d.getMonth() + 1) + '/' + d.getDate() + '/' + d.getFullYear()
       }
 
       axios.get('https://api.github.com/users/mzabriskie', {
-          transformResponse: axios.defaults.transformResponse.concat(function (data, headers) {
-            Object.keys(data).forEach(function (k) {
-              if (ISO_8601.test(data[k])) {
-                data[k] = new Date(Date.parse(data[k]));
-              }
-            });
-            return data;
+        transformResponse: axios.defaults.transformResponse.concat((data, headers) => {
+          Object.keys(data).forEach((k) => {
+            if (ISO_8601.test(data[k])) {
+              data[k] = new Date(Date.parse(data[k]))
+            }
           })
+          return data
         })
-        .then(function (res) {
-          document.getElementById('useravatar').src = res.data.avatar_url;
-          document.getElementById('username').innerHTML = res.data.name;
-          document.getElementById('created').innerHTML = formatDate(res.data.created_at);
-          document.getElementById('updated').innerHTML = formatDate(res.data.updated_at);
-        });
+      })
+        .then((res) => {
+          document.getElementById('useravatar').src = res.data.avatar_url
+          document.getElementById('username').innerHTML = res.data.name
+          document.getElementById('created').innerHTML = formatDate(res.data.created_at)
+          document.getElementById('updated').innerHTML = formatDate(res.data.updated_at)
+        })
     </script>
   </body>
 </html>
